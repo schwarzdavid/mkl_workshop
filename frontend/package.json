@@ -1,0 +1,20 @@
+{
+    "name": "frontend",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "build:api": "openapi-generator-cli generate -i ../api/swagger.json -o src/generated -g typescript-fetch --additional-properties=typescriptThreePlus=true"
+    },
+    "dependencies": {
+        "vue": "^2.6.11"
+    },
+    "devDependencies": {
+        "@openapitools/openapi-generator-cli": "^2.1.7",
+        "@vue/cli-plugin-typescript": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "typescript": "~3.9.3",
+        "vue-template-compiler": "^2.6.11"
+    }
+}
