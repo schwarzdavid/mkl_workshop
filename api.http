@@ -1,0 +1,43 @@
+### Should return "pong"
+GET http://localhost:8080/main
+Accept: application/json
+
+###
+POST http://localhost:8080/main/demo/12
+Content-Type: application/json
+
+{
+    "name": "Max Mustermann",
+    "randomNumber": 456789,
+    "optionalBoolean": true
+}
+
+###
+POST http://localhost:8080/main/demo/12?page=56
+Content-Type: application/json
+
+{
+    "name": "Erika Mustermann",
+    "randomNumber": 78456
+}
+
+### Should return am 400-error
+POST http://localhost:8080/main/demo/12?page=56
+Content-Type: application/json
+
+{
+    "name": "Erika Mustermann",
+    "randomNumber": "78456abc"
+}
+
+### Should return an 404-error
+POST http://localhost:8080/main/demo/
+Content-Type: application/json
+
+{}
+
+### Should return an 400-error
+POST http://localhost:8080/main/demo/12?page=12
+Content-Type: application/json
+
+{}

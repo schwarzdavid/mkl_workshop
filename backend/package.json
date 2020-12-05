@@ -1,0 +1,27 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build:api": "mkdirp ../api && mkdirp src/generated && tsoa spec-and-routes",
+        "build:server": "npm run build:api && tsc",
+        "dev": "npm run build:api && ts-node ./src/index.ts",
+        "start": "node ./dist/index.js"
+    },
+    "author": "David Schwarz <schwarz.david10@gmail.com>",
+    "private": true,
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "tsoa": "^3.4.0"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.19.0",
+        "@types/express": "^4.17.9",
+        "mkdirp": "^1.0.4",
+        "ts-node": "^9.1.0",
+        "typescript": "^4.1.2"
+    }
+}
