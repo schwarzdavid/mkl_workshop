@@ -276,3 +276,10 @@ will get an error on compilation.
 
 In larger projects, you should do HTTP-Requests inside a Vuex-Store. You can do the same in any store or vuex-module.
 Simply instanciate the api you want to use.
+
+# Further Reading
+
+- [tsoa documentation](https://tsoa-community.github.io/docs/)
+- [NestJS](https://nestjs.com/) (Evolution of tsoa/Springframework for NodeJS)
+- [Typescript documentation](https://www.typescriptlang.org/)
+- [Openapi/Swagger](https://swagger.io/)
