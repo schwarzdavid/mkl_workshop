@@ -182,3 +182,104 @@ This will generate another route, which will contain an url- & query-parameter a
 those routes with [Postman](https://www.postman.com/) or with the `api.http`-file in this repo. Copy&Paste it into your
 project and run it with your IDE.
 
+## Task 3 _Frontend preparations_
+
+1. Go to the project-root
+2. Run `vue create frontend`
+3. Select `Manually select features`
+4. Make sure, `TypeScript` is enabled and finish setup process however you like
+5. Go inside the `frontend`-folder
+6. Run `npm i -D @openapitools/openapi-generator-cli`
+
+Open the `package.json` inside the `frontend`-folder and add the following run-config:
+
+```
+"build:api": "openapi-generator-cli generate -i ../api/swagger.json -o src/generated -g typescript-fetch --additional-properties=typescriptThreePlus=true"
+```
+
+Next, create inside the `frontend`-folder a file named `vue.config.js` and paste the following snipped into it:
+
+```typescript
+module.exports = {
+    devServer: {
+        port: 3000,
+        proxy: 'http://localhost:8080'
+    }
+}
+```
+
+With the `proxy`-option, the vue-devserver will redirect all requests, which do not lead to existing resources, to your
+backend on port 8080.
+
+### Generate API-Client
+
+[Make sure you have Java 8 set as JAVA_HOME](https://github.com/OpenAPITools/openapi-generator#13---download-jar)
+
+Next, run `npm run build:api`. You will see a new folder `generated` inside the `src`-folder.
+
+Now, open the `HelloWorld.vue` and replace `script` and `template` with the following snippet:
+
+```vue
+
+<template>
+    <div class="hello">
+        <h3>API Calls</h3>
+        <form @submit.prevent="sendDemoRequest">
+            <input type="text" v-model="demoRequest.name" required>
+            <br>
+            <input type="number" v-model.number="demoRequest.randomNumber" required>
+            <br>
+            <input type="checkbox" v-model="demoRequest.optionalBoolean"> Optional Boolean
+            <br>
+            <button type="submit">Send Request</button>
+        </form>
+    </div>
+</template>
+
+<script lang="ts">
+    import Vue from 'vue';
+    import {Configuration, DefaultApi, DemoRequest} from '@/generated';
+
+    const apiConfiguration = new Configuration({
+        basePath: location.origin
+    });
+    const api = new DefaultApi(apiConfiguration);
+
+    export default Vue.extend({
+        name: 'HelloWorld',
+        data() {
+            return {
+                demoRequest: {
+                    name: '',
+                    randomNumber: 0,
+                    optionalBoolean: false
+                } as DemoRequest
+            }
+        },
+        methods: {
+            async sendDemoRequest() {
+                const response = await api.demo({
+                    id: 12,
+                    page: 23,
+                    demoRequest: this.demoRequest
+                });
+                alert(JSON.stringify(response));
+            }
+        }
+    });
+</script>
+```
+
+`DemoRequest` is the generated interface from the `MainController` in the backend. Also, the `id`-param and the
+optional `page`-queryparam are needed. If you change the api in the future, those interfaces will also update and you
+will get an error on compilation.
+
+In larger projects, you should do HTTP-Requests inside a Vuex-Store. You can do the same in any store or vuex-module.
+Simply instanciate the api you want to use.
+
+# Further Reading
+
+- [tsoa documentation](https://tsoa-community.github.io/docs/)
+- [NestJS](https://nestjs.com/) (Evolution of tsoa/Springframework for NodeJS)
+- [Typescript documentation](https://www.typescriptlang.org/)
+- [Openapi/Swagger](https://swagger.io/)
