@@ -52,7 +52,7 @@ with `tsc && node ./dist/index.js`
 
 ## Task 2: First Route
 
-1. Create folder `src`
+1. Create folder `src` in your `backend`-folder
 2. Create file `index.ts` inside the `src`-folder
 3. Create folder `controller` inside the `src`-folder
 4. Create file `MainController.ts` inside the `src/controller`-folder
