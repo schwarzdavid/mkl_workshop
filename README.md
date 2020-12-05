@@ -34,7 +34,7 @@ Next open your `package.json` and create following run-configs:
 
 ```json
 "build:api": "mkdirp ../api && mkdirp src/generated && tsoa spec-and-routes",
-"build:server": "tsc",
+"build:server": "npm run build:api && tsc",
 "dev": "npm run build:api && ts-node ./src/index.ts",
 "start": "node ./dist/index.js"
 ```
